@@ -9,7 +9,7 @@ B = Quaternion(0, 0, 5, 2)
 print("a ", A*B)
 print("b ", B*A)
 print("c ", A/2.0)
-print("d ", B/A)
+print("d ", B / A)
 
 print((A*A.multiplicativeConjugate()))
 
