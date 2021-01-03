@@ -3,3 +3,5 @@ __pycache__/Quaternion.cpython-39.pyc
 __pycache__/PolarQuaternion.cpython-39.pyc
 __pycache__/MathematicalObject.cpython-39.pyc
 __pycache__/Rotator.cpython-39.pyc
+__pycache__/frange.cpython-39.pyc
+__pycache__/MatansFrange.cpython-39.pyc

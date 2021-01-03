@@ -1,3 +1,9 @@
+
+"""
+DEPRECATED
+"""
+
+
 from MathematicalObject import MathematicalObject
 from math import sqrt
 

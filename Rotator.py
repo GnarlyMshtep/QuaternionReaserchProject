@@ -1,27 +1,29 @@
 #from Vector import Vector
 from Quaternion import Quaternion
-from math import cos, degrees, sin, radians, sqrt
+from math import cos, degrees, sin, radians, sqrt, trunc
+from MatansFrange import frange
 
 # static class. used as a structure to carry out rotations in 3D.
 # a point is a list [x,y,z]
 
 
 # rn no support for interpolation
-def rotate3Dpoint(point: list, axis: list, fromAngle: degrees, toAngle: degrees):
+def rotate3Dpoint(point: list, axis: list, fromAngle: degrees, toAngle: degrees, incrementBy: degrees):
     fromAngle /= 2
     toAngle /= 2
-    for angle in (fromAngle, toAngle):
-        print("In loop")
-        pointAsQuaternion = pointToQuaternion(point)
-        QuaternionToMultBy = findRotationQuaternion(axis, angle)
+    incrementBy /= 2
+    print(frange(fromAngle, toAngle, incrementBy))
+    for angle in frange(fromAngle, toAngle, incrementBy):
+        pointAsQuaternion = Quaternion(
+            True, r=0, x=point[0], y=point[1], z=point[2])
+
+        QuaternionToMultBy = Quaternion(
+            False, theta=angle, vec=normalized(axis))
+
         QuaternionToMultByInverse = QuaternionToMultBy.multiplicativeConjugate()
-        print("we are at: ", (QuaternionToMultBy * pointAsQuaternion)
+
+        print(f"At angle {angle*2} are at: ", (QuaternionToMultBy * pointAsQuaternion)
               * QuaternionToMultByInverse)
-
-
-def pointToQuaternion(point: list):
-    # Vector(point).normalized()
-    return Quaternion(0, point[0], point[1], point[2])
 
 
 def findRotationQuaternion(axis: list, angle: float):

@@ -1,3 +1,8 @@
+"""
+DEPRECATED
+"""
+
+
 import Quaternion as qt
 from math import cos, degrees, sin, radians
 

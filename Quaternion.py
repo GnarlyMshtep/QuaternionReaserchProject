@@ -1,5 +1,5 @@
 from MathematicalObject import MathematicalObject
-from math import sqrt
+from math import sqrt, cos, sin, radians
 
 ERROR = .0005
 PRECISION = 4
@@ -24,11 +24,36 @@ def sign(x): return "+" if x >= 0 else("-")
 
 # let the user define in polar form, no need to worry about updating since quaternions are never updated, I always return a new object.
 class Quaternion(MathematicalObject):
-    def __init__(self, r: float, i: float, j: float, k: float):
-        self.r = r
-        self.i = i
-        self.j = j
-        self.k = k
+    def __init__(self, isCartesian: bool,  **kwargs):
+        """
+            2 quaternion forms and 2 possible intialization specified by the first bool parameter:
+                Cartesian: H = r + xi + yj + zk. Specify r=, x=, y=, and z=. 
+                Polar = H = ||H||(e^(n̂θ)) = ||H||(cosθ + sinθ(x, y, z)) specify theta=degress, and vec= 3-list. note that the vector doesn't have to be normlized, 
+                we'll do that for you!
+            EXAMPLE:
+                A = Quaternion(True, r=0.42, x=.68, y=.33, z=.5)
+                B = Quaternion(False, theta=65, vec=[.75, .36, .55])
+        """
+        if isCartesian:
+            self.r = kwargs["r"]
+            self.i = kwargs["x"]
+            self.j = kwargs["y"]
+            self.k = kwargs["z"]
+
+        else:
+            magnitude = sqrt(sum([i**2 for i in kwargs["vec"]]))
+
+            #normalizedVec = [j / magnitude for j in kwargs["vec"]]
+            # now that we normalized our vector we can set up the cartesian properties that we plan to use
+
+            # used so we don't reapet this part of the calculation
+
+            temp = sin(radians(kwargs["theta"]))
+
+            self.r = magnitude * cos(radians(kwargs["theta"]))
+            self.i = kwargs["vec"][0] * temp
+            self.j = kwargs["vec"][1] * temp
+            self.k = kwargs["vec"][2] * temp
 
     def __str__(self):
         # return str(self.r) + " + "+str(self.i) + "i+ "+str(self.j) + "j+ "+str(self.k)+"k"
@@ -38,27 +63,27 @@ class Quaternion(MathematicalObject):
 
     def __mul__(self, q2):
         if (isinstance(q2, Quaternion)):
-            return Quaternion(self.r*q2.r-self.i*q2.i-self.j*q2.j-self.k*q2.k,
-                              self.r*q2.i+self.i*q2.r+self.j*q2.k-self.k*q2.j,
-                              self.r*q2.j+self.j*q2.r+self.k*q2.i-self.i*q2.k,
-                              self.r*q2.k+self.k*q2.r+self.i*q2.j-self.j*q2.i)
+            return Quaternion(True, r=self.r*q2.r-self.i*q2.i-self.j*q2.j-self.k*q2.k,
+                              x=self.r*q2.i+self.i*q2.r+self.j*q2.k-self.k*q2.j,
+                              y=self.r*q2.j+self.j*q2.r+self.k*q2.i-self.i*q2.k,
+                              z=self.r*q2.k+self.k*q2.r+self.i*q2.j-self.j*q2.i)
         else:
-            return Quaternion(self.r*q2, self.i*q2, self.j*q2, self.k*q2)
+            return Quaternion(True, r=self.r*q2, x=self.i*q2, y=self.j*q2, z=self.k*q2)
 
     # spent about an hr figuring out that __div__ is no longer supported 🤬🤬
     def __truediv__(self, other):
         if(isinstance(other, Quaternion)):
             return self.__mul__(other.multiplicativeConjugate())
         if(isinstance(other, (float, int))):
-            return Quaternion(self.r/other, self.i/other, self.j/other, self.k/other)
+            return Quaternion(True, r=self.r/other, x=self.i/other, y=self.j/other, z=self.k/other)
         else:
             return NotImplemented
 
     def __add__(self, q2):
-        return Quaternion(self.r+q2.r, self.i+q2.i, self.j+q2.j, self.k+q2.k)
+        return Quaternion(True, r=self.r+q2.r, x=self.i+q2.i, y=self.j+q2.j, z=self.k+q2.k)
 
     def __sub__(self, q2):
-        return Quaternion(self.r-q2.r, self.i-q2.i, self.j-q2.j, self.k-q2.k)
+        return Quaternion(True, r=self.r-q2.r, x=self.i-q2.i, y=self.j-q2.j, z=self.k-q2.k)
 
     def mod(self):
         return sqrt(self.r**2+self.i**2+self.j**2+self.k**2)
@@ -67,11 +92,11 @@ class Quaternion(MathematicalObject):
         return self.mod()
 
     def AdditiveConjugate(self):
-        return Quaternion(-self.r, -self.i, -self.j, -self.k)
+        return Quaternion(True, r=-self.r, x=-self.i, y=-self.j, z=-self.k)
 
     def multiplicativeConjugate(self):
-        x = self.magnitude()**2
-        return Quaternion(self.r/x, -self.i/x, -self.j/x, -self.k/x)
+        m = self.magnitude()**2
+        return Quaternion(True, r=self.r/m, x=-self.i/m, y=-self.j/m, z=-self.k/m)
 
     def isUnitQuaternion(self):
         return (abs(self.magnitude()-1) < ERROR)
