@@ -1,5 +1,5 @@
 from MathematicalObject import MathematicalObject
-from math import sqrt, cos, sin, radians
+from math import sqrt, cos, sin, radians, acos, degrees
 
 ERROR = .0005
 PRECISION = 4
@@ -48,6 +48,9 @@ class Quaternion(MathematicalObject):
 
             # used so we don't reapet this part of the calculation
 
+            if "angle" in kwargs.keys():
+                kwargs["theta"] = kwargs["angle"]
+
             temp = sin(radians(kwargs["theta"]))
 
             self.r = magnitude * cos(radians(kwargs["theta"]))
@@ -60,6 +63,9 @@ class Quaternion(MathematicalObject):
         # return f"{round(self.r,3)}+{round(self.i,3)}i+{round(self.j,3)}j+{round(self.k,3)}k"
         return f"{sign(self.r)}{abs(round(self.r, PRECISION))} {sign(self.i)}{abs(round(self.i, PRECISION))}i {sign(self.j)}{ abs(round(self.j, PRECISION))}j { sign(self.k)}{abs(round(self.k, PRECISION))}k "
         # return f"{{round(self.r,3)}+{round(self.i,3)}i+{round(self.j,3)}j+{round(self.k,3)}k"
+
+    def __repr__(self):
+        return f"{sign(self.r)}{abs(round(self.r, PRECISION))} {sign(self.i)}{abs(round(self.i, PRECISION))}i {sign(self.j)}{ abs(round(self.j, PRECISION))}j { sign(self.k)}{abs(round(self.k, PRECISION))}k "
 
     def __mul__(self, q2):
         if (isinstance(q2, Quaternion)):
@@ -100,6 +106,26 @@ class Quaternion(MathematicalObject):
 
     def isUnitQuaternion(self):
         return (abs(self.magnitude()-1) < ERROR)
+
+    def getPolarRepresentation(self) -> dict:
+        """
+        returns a dictionary such that
+        (magnitude) *(cos(theta)+ sin(theta)(vec)) 
+        and magnitude, theta, and vec are the accessible values
+        """
+        mag = self.magnitude()
+        normalized = self/mag
+        theta = acos(normalized.r)
+
+        # guard from div by 0 when we don't rotate at all
+        divisor = 1 if sin(theta) == 0 else sin(theta)
+
+        return {
+            "magnitude": mag,
+            "theta": degrees(theta),
+            "angle": degrees(theta),
+            "vec": (self.i/divisor, self.j/divisor, self.k/divisor),
+        }
 
     def __pow__(self, power):
         if(isinstance(power, int)):

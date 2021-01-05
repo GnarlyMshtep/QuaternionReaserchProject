@@ -9,8 +9,12 @@ B = Quaternion(False, theta=65, vec=[.75, .36, .55])
 
 #print(A, B)
 
-rotator = Rotator.rotate3Dpoint((1, 0, 0), (0, 0, 1), 0, 180, 1)
+# esultingPosition = Rotator.rotate3DpointFromToAngle(
+#    (1, 0, 0), (1, 1, 1), 0, 75, 1)
 
+x = Rotator.rotateAboutMultipleAxis(
+    point=(1, 0, 0), axisAnglePairs=(((0, 0, 1), 90), ((0, 0, 1), 180), ((0, 0, 2), 90)), incrementBy=1)
+# last report: At angle 90.0 are at:  +0.0 +0.0i -1.0j +0.0k , makes sence!
 #
 # print("a ", A*B)
 # print("b ", B*A)
