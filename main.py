@@ -1,6 +1,6 @@
 from Quaternion import Quaternion
 import Rotator as Rotator
-from MatansFrange import frange
+from Encryptor import Encryptor
 
 #print(frange(90, 180, .333))
 
@@ -14,7 +14,7 @@ B = Quaternion(False, theta=65, vec=[.75, .36, .55])
 
 x = Rotator.rotateAboutMultipleAxis(
     point=(1, 0, 0), axisAnglePairs=(((0, 0, 1), 90), ((0, 0, 1), 180), ((0, 0, 2), 90)), incrementBy=1)
-# last report: At angle 90.0 are at:  +0.0 +0.0i -1.0j +0.0k , makes sence!
+# last report: At angle 90.0 are at:  +0.0 +0.0i -1.0j +0.0k , makes since!
 #
 # print("a ", A*B)
 # print("b ", B*A)
@@ -25,3 +25,7 @@ x = Rotator.rotateAboutMultipleAxis(
 #
 
 # rotator.rotate3Dpoint([0, 2, 0], [1, 0, 0], -90, 90)
+
+
+enc = Encryptor('geoHot.jpeg', 'enc.jpeg', ((1, 7634, 3), 90))
+enc.simpleEncryptByQuaternionMult()

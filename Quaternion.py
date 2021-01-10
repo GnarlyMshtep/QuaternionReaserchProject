@@ -127,6 +127,9 @@ class Quaternion(MathematicalObject):
             "vec": (self.i/divisor, self.j/divisor, self.k/divisor),
         }
 
+    def getQuaternionAsList(self):
+        return [self.r, self.i, self.j, self.k]
+
     def __pow__(self, power):
         if(isinstance(power, int)):
             x = self
