@@ -130,6 +130,9 @@ class Quaternion(MathematicalObject):
     def getQuaternionAsList(self):
         return [self.r, self.i, self.j, self.k]
 
+    def getVectorComponentsAsTuple(self) -> tuple:
+        return (self.i, self.j, self.k)
+
     def __pow__(self, power):
         if(isinstance(power, int)):
             x = self

@@ -14,11 +14,12 @@ To implement:
 
 
 # this function allows the user to rotate not starting from 0deg
-def rotate3DpointFromToAngle(point: list, axis: list, fromAngle: degrees, toAngle: degrees, incrementBy: degrees = 1) -> Quaternion:
+def rotate3DpointFromToAngle(point: list, axis: list, fromAngle: degrees, toAngle: degrees, incrementBy: degrees = 1) -> dict:
+    posList = []
     fromAngle /= 2
     toAngle /= 2
     incrementBy /= 2
-    print(frange(fromAngle, toAngle, incrementBy))
+    # print(frange(fromAngle, toAngle, incrementBy))
     for angle in frange(fromAngle, toAngle, incrementBy):
         pointAsQuaternion = Quaternion(
             True, r=0, x=point[0], y=point[1], z=point[2])
@@ -29,9 +30,10 @@ def rotate3DpointFromToAngle(point: list, axis: list, fromAngle: degrees, toAngl
         QuaternionToMultByInverse = QuaternionToMultBy.multiplicativeConjugate()
         resultingQuaternion = (QuaternionToMultBy *
                                pointAsQuaternion) * QuaternionToMultByInverse
-
-        print(f"At angle {angle*2} are at: ", resultingQuaternion)
-        return {"Quaternion": resultingQuaternion, "QuaternionAsList": resultingQuaternion.getQuaternionAsList()}
+        posList.append(resultingQuaternion.getVectorComponentsAsTuple())
+       # print(f"At angle {angle*2} are at: ",
+        # resultingQuaternion.getVectorComponentsAsTuple())
+    return {"list of positions": posList, "Quaternion": resultingQuaternion, "QuaternionAsList": resultingQuaternion.getQuaternionAsList()}
 
 
 def rotateAboutMultipleAxis(point: list, axisAnglePairs: list, incrementBy: degrees) -> Quaternion:
@@ -52,7 +54,7 @@ def rotateAboutMultipleAxis(point: list, axisAnglePairs: list, incrementBy: degr
                  for quaternion in reversed(qs)]
 
     qsProd = prod(qs, start=Quaternion(True, r=1, x=0, y=0, z=0))
-    qInversesProd = prod(qInverses, start=Quaternion(True, r=1, x=0, y=0, z=0))\
+    qInversesProd = prod(qInverses, start=Quaternion(True, r=1, x=0, y=0, z=0))
 
     print(qsProd, qInversesProd)
     print(qsProd.getPolarRepresentation()["theta"])

@@ -5,3 +5,9 @@ __pycache__/MathematicalObject.cpython-39.pyc
 __pycache__/Rotator.cpython-39.pyc
 __pycache__/frange.cpython-39.pyc
 __pycache__/MatansFrange.cpython-39.pyc
+*.pyc
+.vs/code/v15/.suo
+*.sqlite
+.vs/VSWorkspaceState.json
+__pycache__/Encryptor.cpython-39.pyc
+__pycache__/Encryptor.cpython-39.pyc
