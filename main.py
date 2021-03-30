@@ -1,10 +1,10 @@
 from Quaternion import Quaternion
 import Rotator as Rotator
 from Encryptor import Encryptor
-import visualiser as vs
+#import visualiser as vs
 
 #print(frange(90, 180, .333))
-vs.move()
+# vs.move()
 A = Quaternion(True, r=0.42, x=.68, y=.33, z=.5)
 B = Quaternion(False, theta=65, vec=[.75, .36, .55])
 
@@ -16,7 +16,7 @@ resultingPosition = Rotator.rotate3DpointFromToAngle(
 
 x = Rotator.rotateAboutMultipleAxis(
     point=(1, 0, 0), axisAnglePairs=(((0, 0, 1), 90), ((0, 0, 1), 180), ((0, 0, 2), 89)), incrementBy=.5)
-
+print(x)
 # rotating by 359 degress doesn't roatate
 
 

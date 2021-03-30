@@ -30,12 +30,12 @@ In GlowScript programs:
 
 # set up static html stuff here
 scene.append_to_caption(
-    """"<style> *{margin : 0; padding: 0; font-family: Times New Roman;} 
+    """"<style> *{margin : 0; padding: 0; font-family: Times New Roman;}
     canvas{border : 100px solid purple;} """)
 
 # set up the scene
-scene = canvas(title="Matan's testing toy", width=400,
-               height=300, background=color.black, align="center", color=color.magenta)
+scene = canvas(title="Matan's testing toy", width=800,
+               height=450, background=color.black, align="center", color=color.magenta)
 scene.center = vec(0, 0, 0)
 scene.caption = LEGEND
 
@@ -64,5 +64,9 @@ scene.camera.axis = vec(-4.19761, -3.94946, -11.2501)
 
 
 # start messing around with rotations and such
-ball = rotatingBody(pos=vec(6, 6, 6))
-ball.rotateAboutSingleAxis((5, 4, 1), 0, 90, .1)
+ball = rotatingBody(pos=vec(0, 10, 0))
+# ball.rotateAboutSingleAxis((1, 0, 0), 0, 90)
+sleep(10)
+#ball.rotateAboutSingleAxis((7, 1, 5), 0, 165)
+print(len(((((3, 0, 2), 100), ((0, 15, 4), 0)), .1, 90)))
+ball.rotateAboutMultipleAxis((((3, 0, 2), 60), ((10, 15, 4), -293)), .2)

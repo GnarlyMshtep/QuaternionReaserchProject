@@ -11,6 +11,7 @@ def sign(x): return "+" if x >= 0 else("-")
 
 # Cartesian!!!
 
+
 """
       def __init__(self, cartesian: bool, r: float, i: float, j: float, k: float):
         if cartesian:
@@ -41,6 +42,7 @@ class Quaternion(MathematicalObject):
             self.k = kwargs["z"]
 
         else:
+            #print('HERE', kwargs["vec"])
             magnitude = sqrt(sum([i**2 for i in kwargs["vec"]]))
 
             #normalizedVec = [j / magnitude for j in kwargs["vec"]]

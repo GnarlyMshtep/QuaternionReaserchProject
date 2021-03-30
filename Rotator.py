@@ -45,10 +45,11 @@ def rotateAboutMultipleAxis(point: list, axisAnglePairs: list, incrementBy: degr
          point       tuple of tuples of axis angle pairs  degrees inc to print
     """
     qs = []
+    print('axis angle pairs that go into multipleAxis rotator  ', axisAnglePairs)
     for axisAnglePair in axisAnglePairs:
         qs.append(Quaternion(
             False, angle=axisAnglePair[1], vec=axisAnglePair[0]))
-
+    print("resultent q: ", qs)
     # not needed since the next function will make this calculation for us with greater efficiency
     qInverses = [quaternion.multiplicativeConjugate()
                  for quaternion in reversed(qs)]
@@ -58,5 +59,4 @@ def rotateAboutMultipleAxis(point: list, axisAnglePairs: list, incrementBy: degr
 
     print(qsProd, qInversesProd)
     print(qsProd.getPolarRepresentation()["theta"])
-    rotate3DpointFromToAngle(
-        point, qsProd.getPolarRepresentation()["vec"], 0, qsProd.getPolarRepresentation()["theta"], incrementBy)
+    return (qsProd.getPolarRepresentation()["vec"], 0, qsProd.getPolarRepresentation()["theta"], incrementBy)
