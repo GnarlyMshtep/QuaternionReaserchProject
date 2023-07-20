@@ -1,2 +1,2 @@
 # QuaternionReaserchProject
-Research project centered around Quaternions and how their 3D rotation properties can be used to encrypt data. Main.py currently doesn't contain any functionality, it's just used to test the other parts of the program.
+Research project advised by [Dr. William Pezzaglia](https://people.well.com/user/billium/) at Las Positas Community College during the 2020-2021 school year. The project includes a basic implementation of [Quaternions](https://en.wikipedia.org/wiki/Quaternion) in Python. Using the [vpython](https://vpython.org/) library to display 3D graphics, we use our Quaternions implementation to computer and display arbitrary rotations in the 3D space. 
